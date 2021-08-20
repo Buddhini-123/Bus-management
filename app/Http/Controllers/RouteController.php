@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Route;
-use App\Http\Requests\RouteRequest;
+use App\Http\Requests\RoutRequest;
 use App\Http\Requests\UpdateRouteRequest;
 
 class RouteController extends Controller
 {
     //insert data to the table
-    public function createRoute(RouteRequest $request){
+    public function createRoute(RoutRequest $request){
 
         //create route variable towards the data
         $route= new Route();

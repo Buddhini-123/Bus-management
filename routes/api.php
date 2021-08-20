@@ -23,7 +23,7 @@ Route::middleware('auth:sanctum')->group(function() {
 
 Route::post("login",[UserController::class,'login']);
 Route::post('/user-create',[UserController::class,'create']);
-Route::post("login",[SuperAdminController::class,'login']);
+Route::post("login-admin",[SuperAdminController::class,'login']);
 Route::post('/super_admin-create',[SuperAdminController::class,'create']);
 
 

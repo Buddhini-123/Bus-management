@@ -8,8 +8,6 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\UserRequest;
 use App\Http\Requests\UserCreateRequest;
-use Validator;
-use Arr;
 
 class UserController extends Controller
 {
@@ -27,16 +25,24 @@ class UserController extends Controller
     //user login
     function login(UserRequest $request)
     {
-        $validated = $request->validated();
-        $user = User::where('email', $validated['email'])->first();
-        if (!Auth::attempt($validated,true)) {
 
-            return response()->json(['message'=>'wrong'],200);
+
+        $user=User::where('email', $request->email)->first();
+        //print_r($data);
+        if(!$user || !Hash::check($request->password, $user->password)){
+            return response([
+                'message' => ['These credentials do not match our records']
+            ], 404);
         }
 
-        return response([
-            'message' => ['success']
-        ], 404);
+        $token = $user->createToken('my-app-token')->plainTextToken;
+
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response,201);
 
     }
 
